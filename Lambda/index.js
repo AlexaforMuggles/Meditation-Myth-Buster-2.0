@@ -114,19 +114,10 @@ const ExitHandler = {
 }
 
 
-// initiate git repo
-// separate facts into a separate file
-// separate language into a separate file
 // add additional code
 // look up how-to sample code to merge it
+// separate facts into a separate file
+// separate language into a separate file
 
-// Learnings: 
-// Launch Requests are only added to intents which the user actively uses. All technical handlers only have Intent requests. 
 
-// CanHandlers define the request and return request types (intent or launch) as well as the intent name
-    // const request = handlerInput.requestEnvelope.request;
 
-// handle() contain defined variables, error messages if applicable and response Builders
-// Response builders contain speak, reprompt or withSimpleCard and get response. If it's only one of them then it's chained at the end like this: return handlerInput.responseBuilder.getResponse(); 
-
-// In the response you can either give a fixed message in the paranthesis or refer to a message which is somewhere else. That is usually cleaner because you can just change the language instead of having to change the outputSpeech every time. 
