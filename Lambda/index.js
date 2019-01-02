@@ -1,6 +1,28 @@
 const Alexa = require('ask-sdk'); 
-const i18n = require('i18next'); //this is used to generate the random bit
-const sprintf = require('i18next-sprintf-postprocessor'); 
+
+const data = require('./Data/data.js'); 
+
+const LaunchRequestHandler = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+    },
+    handle(handlerInput) {
+      const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+      const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+  
+      const item = requestAttributes.t(getRandomItem(Object.keys(data.FACTS)));
+  
+      const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
+      const repromptOutput = requestAttributes.t('WELCOME_REPROMPT');
+  
+      handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+  
+      return handlerInput.responseBuilder
+        .speak(speakOutput)
+        .reprompt(repromptOutput)
+        .getResponse();
+    },
+  };
 
 const GetNewFactHandler = {
     canHandle(handlerInput) {
@@ -21,24 +43,60 @@ const GetNewFactHandler = {
     }
 }; 
 
-const GetNewQuestionHandler = {
+
+const GetNewAnswerHandler = {
     canHandle(handlerInput) {
-        const request = handlerInput.requestEnvelope.request;
-    return request.type === 'LaunchRequest'
-        || request.type ===  'IntentRequest'
-        && request.intent.name === 'GetNewQuestionHandler'
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+              && handlerInput.requestEnvelope.request.intent.name === 'AnswerIntent';
     },
     handle(handlerInput) {
-        const requestAttributes = handlerInput.attributesManager.getRequestAttributes(); 
-        const answer = requestAttributes.t(''); // not sure what to add here, look up sample 
-        const speakOutput = requestAttributes.t(''); // not sure what to add here
-
+      const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+      const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+  
+      const itemSlot = handlerInput.requestEnvelope.request.intent.slots.Item;
+      let itemName;
+      if (itemSlot && itemSlot.value) {
+        itemName = itemSlot.value.toLowerCase();
+      }
+  
+      const cardTitle = requestAttributes.t('DISPLAY_CARD_TITLE', requestAttributes.t('SKILL_NAME'), itemName);
+      const myData = requestAttributes.t('DATA');
+      const data = myData[itemName];
+      let speakOutput = "";
+  
+      if (data) {
+        sessionAttributes.speakOutput = data;
+        sessionAttributes.repromptSpeech = requestAttributes.t('DATA_REPEAT_MESSAGE');
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+  
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .withSimpleCard(requestAttributes.t('SKILL_NAME'), answer)
-            .getResponse(); 
+          .speak(sessionAttributes.speakOutput) 
+          .reprompt(sessionAttributes.repromptSpeech)
+          .withSimpleCard(cardTitle, data)
+          .getResponse();
+      }
+      else{
+        speakOutput = requestAttributes.t('DATA_NOT_FOUND_MESSAGE');
+        const repromptSpeech = requestAttributes.t('DATA_NOT_FOUND_REPROMPT');
+        if (itemName) {
+          speakOutput += requestAttributes.t('DATA_NOT_FOUND_WITH_ITEM_NAME', itemName);
+        } else {
+          speakOutput += requestAttributes.t('DATA_NOT_FOUND_WITHOUT_ITEM_NAME');
+        }
+        speakOutput += repromptSpeech;
+  
+        sessionAttributes.speakOutput = speakOutput; 
+        sessionAttributes.repromptSpeech = repromptSpeech;
+  
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+  
+        return handlerInput.responseBuilder
+          .speak(sessionAttributes.speakOutput)
+          .reprompt(sessionAttributes.repromptSpeech)
+          .getResponse();
+      }
     }
-}; 
+  };
 
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
@@ -113,11 +171,38 @@ const ExitHandler = {
     }
 }
 
+function getRandomItem(arrayOfItems) {
+    
+    let i = 0;
+    i = Math.floor(Math.random() * arrayOfItems.length);
+    return (arrayOfItems[i]);
+  };
 
-// add additional code
-// look up how-to sample code to merge it
-// separate facts into a separate file
-// separate language into a separate file
 
+const skillBuilder = Alexa.SkillBuilders.custom();
+
+exports.handler = skillBuilder
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    GetNewFactHandler,
+    GetNewAnswerHandler,
+    HelpHandler,
+    ExitHandler,
+    FallbackHandler,
+    SessionEndedRequestHandler,
+  )
+ 
+  .addErrorHandlers(ErrorHandler)
+  .lambda();
+
+
+
+
+
+//Learnings: 
+//Localization, internationalization (i18n). Internationalization (i18n) is the process of planning and implementing products and services so that they can easily be adapted to specific local languages and cultures, a process called localization. I don't need this for this skill as it doesn't have translations. 
+
+//to-do
+//
 
 
