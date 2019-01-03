@@ -1,0 +1,65 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "meditation myth buster",
+            "intents": [
+                {
+                    "name": "GetNewFactIntent",
+                    "slots": [],
+                    "samples": [
+                        "a fact",
+                        "a meditation fact",
+                        "a meditation myth",
+                        "a myth",
+                        "tell me a fact",
+                        "tell me a meditation fact",
+                        "tell me a meditation myth",
+                        "tell me a myth",
+                        "give me a fact",
+                        "give me a meditation fact",
+                        "give me a meditation myth",
+                        "give me a myth",
+                        "tell me trivia",
+                        "tell me meditation trivia",
+                        "tell me myth trivia",
+                        "give me trivia",
+                        "give me meditation trivia",
+                        "give me some information",
+                        "give me some meditation information",
+                        "tell me something",
+                        "give me something",
+                        "continue",
+                        "bust a myth",
+                        "bust a meditation myth"
+                    ]
+                },
+                {
+                    "name": "GetNewAnswerHandler",
+                    "slots": [],
+                    "samples": [
+
+                    ]
+
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}
+
