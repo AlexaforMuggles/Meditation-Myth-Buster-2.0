@@ -34,18 +34,6 @@
                     ]
                 },
                 {
-                    "name": "GetNewAnswerHandler",
-                    "slots": [],
-                    "samples": [
-
-                    ]
-
-                },
-                {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
-                },
-                {
                     "name": "AMAZON.HelpIntent",
                     "samples": []
                 },
@@ -56,10 +44,300 @@
                 {
                     "name": "AMAZON.CancelIntent",
                     "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetNewAnswerIntent",
+                    "slots": [
+                        {
+                            "name": "Item",
+                            "type": "LIST_OF_ITEMS"
+                        }
+                    ],
+                    "samples": [
+                        "how can I develop a {Item}",
+                        "how can I develop an {Item}",
+                        "how can I develop {Item}",
+                        "how can I learn about a {Item}",
+                        "how can I learn about an {Item}",
+                        "how can I learn {Item}",
+                        "how can I get a {Item}",
+                        "how can I get an {Item}",
+                        "how can I get {Item}",
+                        "how can I make a {Item}",
+                        "how can I make an {Item}",
+                        "how can I make {Item}",
+                        "how can you develop a {Item}",
+                        "how can you develop an {Item}",
+                        "how can you develop {Item}",
+                        "how can you learn about a {Item}",
+                        "how can you learn about an {Item}",
+                        "how can you learn {Item}",
+                        "how can you get a {Item}",
+                        "how can you get an {Item}",
+                        "how can you get {Item}",
+                        "how can you make a {Item}",
+                        "how can you make an {Item}",
+                        "how can you make {Item}",
+                        "how do I develop a {Item}",
+                        "how do I develop an {Item}",
+                        "how do I develop {Item}",
+                        "how do I learn about a {Item}",
+                        "how do I learn about an {Item}",
+                        "how do I learn {Item}",
+                        "how do I get a {Item}",
+                        "how do I get an {Item}",
+                        "how do I get {Item}",
+                        "how do I make a {Item}",
+                        "how do I make an {Item}",
+                        "how do I make {Item}",
+                        "how do you develop a {Item}",
+                        "how do you develop an {Item}",
+                        "how do you develop {Item}",
+                        "how do you learn about a {Item}",
+                        "how do you learn about an {Item}",
+                        "how do you learn about {Item}",
+                        "how do you get a {Item}",
+                        "how do you get an {Item}",
+                        "how do you get {Item}",
+                        "how do you make a {Item}",
+                        "how do you make an {Item}",
+                        "how do you make {Item}",
+                        "how is a {Item} developed",
+                        "how is a {Item} learned",
+                        "how is a {Item} made",
+                        "how is an {Item} developed",
+                        "how is an {Item} learned",
+                        "how is an {Item} made",
+                        "how is {Item} developed",
+                        "how is {Item} made",
+                        "how {Item} is made",
+                        "what are a {Item}",
+                        "what are an {Item}",
+                        "what are {Item}",
+                        "what do I need for a {Item}",
+                        "what do I need for an {Item}",
+                        "what do I need for {Item}",
+                        "what do I need to learn about a {Item}",
+                        "what do I need to learn about an {Item}",
+                        "what do I need to learn {Item}",
+                        "what do I need to develop a {Item}",
+                        "what do I need to develop an {Item}",
+                        "what do I need to develop {Item}",
+                        "what do I need to get for a {Item}",
+                        "what do I need to get for an {Item}",
+                        "what do I need to get for {Item}",
+                        "what do I need to get to develop a {Item}",
+                        "what do I need to get to develop an {Item}",
+                        "what do I need to get to develop {Item}",
+                        "what do I need to get to learn about a {Item}",
+                        "what do I need to get to learn about an {Item}",
+                        "what do I need to get to learn {Item}",
+                        "what do I need to get to make a {Item}",
+                        "what do I need to get to make an {Item}",
+                        "what do I need to get to make {Item}",
+                        "what do I need to have to develop a {Item}",
+                        "what do I need to have to develop an {Item}",
+                        "what do I need to have to develop {Item}",
+                        "what's in an {Item}",
+                        "what's in {Item}",
+                        "how to develop {Item}",
+                        "how to develop a {Item}",
+                        "how to develop an {Item}",
+                        "how to make a {Item}",
+                        "how to make an {Item}",
+                        "how to make {Item}",
+                        "how to learn about a {Item}",
+                        "how to learn about an {Item}",
+                        "how to learn {Item}",
+                        "how to get a {Item}",
+                        "how to get an {Item}",
+                        "how to get {Item}",
+                        "{Item}",
+                        "tell me about {Item}",
+                        "tell me about the {Item}",
+                        "how can I practice {Item}",
+                        "how can I practice the {Item}",
+                        "how do I get better at {Item}",
+                        "what do I need to have to learn about a {Item}",
+                        "what do I need to have to learn about an {Item}",
+                        "what do I need to have to learn {Item}",
+                        "what do I need to have to make a {Item}",
+                        "what do I need to have to make an {Item}",
+                        "what do I need to have to make {Item}",
+                        "what do I need to make a {Item}",
+                        "what do I need to make an {Item}",
+                        "what do I need to make {Item}",
+                        "what do you need for a {Item}",
+                        "what do you need for an {Item}",
+                        "what do you need for {Item}",
+                        "what is a {Item}",
+                        "what is an {Item}",
+                        "what is {Item}",
+                        "what's in a {Item}"
+                    ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "LIST_OF_ITEMS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "fad"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "jerk meditators"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "concentration"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "10 min enough"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lifestyle"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "panacea"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "boring"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "condition"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "posture"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hard"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eyes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "apply"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "clarification"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "side-effect"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "guru"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "secular practice"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "noise"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "gadgets"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "no stress"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "duration"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "no time"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "roots"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "expecting benefits"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "selfish"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thinking"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mindfulness"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "enlightenment"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "thinking nothing"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "can't sit still"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     }
 }
-
