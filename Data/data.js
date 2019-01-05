@@ -16,7 +16,7 @@ module.exports = {
     DATA_REPEAT_MESSAGE: 'Could you repeat that please?',
     DISPLAY_CARD_TITLE: '%s  - Answer for %s.',
     
-    FACTS:
+      FACTS:
         [
           '<audio src="https://s3.amazonaws.com/meditation-myth-buster-mp3/MMB_10+min+enough_181220.mp3"/>',
           '<audio src="https://s3.amazonaws.com/meditation-myth-buster-mp3/MMB_10+min_181219.mp3"/>',

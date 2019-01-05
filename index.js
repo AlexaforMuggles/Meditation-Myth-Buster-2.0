@@ -24,12 +24,12 @@ const LaunchRequestHandler = {
     },
   };
 
-const GetNewFactHandler = {
+const GetNewFactIntent = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request; 
     return request.type === 'LaunchRequest'
         || request.type === 'IntentRequest'
-        && request.intent.name === 'GetNewFactHandler'    
+        && request.intent.name === 'GetNewFactIntent'    
     },
     handle(handlerInput) {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes(); 
@@ -44,10 +44,10 @@ const GetNewFactHandler = {
 }; 
 
 
-const GetNewAnswerHandler = {
+const GetNewAnswerIntent = {
     canHandle(handlerInput) {
       return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-              && handlerInput.requestEnvelope.request.intent.name === 'AnswerIntent';
+              && handlerInput.requestEnvelope.request.intent.name === 'GetNewAnswerIntent';
     },
     handle(handlerInput) {
       const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
@@ -162,7 +162,7 @@ const ExitHandler = {
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' 
         &&     (request.intent.name === 'AMAZON.CancelIntent'
-        ||      request.intent.name === 'AMAZON.StopIntent')
+        ||      request.intent.name === 'AMAZON.StopIntent')
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
@@ -184,8 +184,8 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    GetNewFactHandler,
-    GetNewAnswerHandler,
+    GetNewFactIntent,
+    GetNewAnswerIntent,
     HelpHandler,
     ExitHandler,
     FallbackHandler,
@@ -195,14 +195,7 @@ exports.handler = skillBuilder
   .addErrorHandlers(ErrorHandler)
   .lambda();
 
-
-
-
-
-//Learnings: 
-//Localization, internationalization (i18n). Internationalization (i18n) is the process of planning and implementing products and services so that they can easily be adapted to specific local languages and cultures, a process called localization. I don't need this for this skill as it doesn't have translations. 
-
-//to-do
-//
-
+  //Debugging to do: 
+  // check the difference between handler and intent in the sample code for both the fact and the how-to skill 
+  
 

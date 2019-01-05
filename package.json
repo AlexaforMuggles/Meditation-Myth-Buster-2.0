@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AlexaforMuggles/Meditation-Myth-Buster-2.0.git"
+  },
   "author": "Kristen Truempy",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ask-sdk": "^2.3.0"
+  }
 }
