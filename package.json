@@ -13,6 +13,7 @@
   "author": "Kristen Truempy",
   "license": "ISC",
   "dependencies": {
-    "ask-sdk": "^2.3.0"
+    "ask-sdk": "^2.3.0",
+    "ask-sdk-core": "^2.3.0"
   }
 }
