@@ -1,6 +1,9 @@
 const Alexa = require('ask-sdk-core'); 
+const i18n = require('i18next');
+const sprintf = require('i18next-sprintf-postprocessor');
 
 const data = require('./Data/data.js'); 
+const {languageStrings} = require('./Data/data.js'); 
 
 const LaunchRequestHandler = {
      canHandle(handlerInput) {
@@ -194,6 +197,22 @@ const ExitHandler = {
     }
 }
 
+const LocalizationInterceptor = {
+    process(handlerInput) {
+      const localizationClient = i18n.use(sprintf).init({
+        lng: handlerInput.requestEnvelope.request.locale,
+        overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
+        resources: languageStrings,
+        returnObjects: true
+      });
+  
+      const attributes = handlerInput.attributesManager.getRequestAttributes();
+      attributes.t = function (...args) {
+        return localizationClient.t(...args);
+      };
+    },
+  };
+
 function getRandomItem(arrayOfItems) {
     console.log("THIS.EVENT = " + JSON.stringify(this.event));
      let i = 0;
@@ -215,6 +234,7 @@ exports.handler = skillBuilder
     SessionEndedRequestHandler,
   )
  
+  .addRequestInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
 
