@@ -3,7 +3,8 @@ const i18n = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
 
 const data = require('./Data/data.js'); 
-const {languageStrings} = require('./Data/data.js'); 
+const language = require('./Data/language.js'); 
+
 
 const LaunchRequestHandler = {
      canHandle(handlerInput) {
@@ -17,8 +18,8 @@ const LaunchRequestHandler = {
   
        const item = requestAttributes.t(getRandomItem(Object.keys(data.FACTS)));
   
-       const speakOutput = requestAttributes.t('WELCOME_MESSAGE', requestAttributes.t('SKILL_NAME'), item);
-       const repromptOutput = requestAttributes.t('WELCOME_REPROMPT');
+       const speakOutput = requestAttributes.t(language.WELCOME_MESSAGE, requestAttributes.t(language.SKILL_NAME), item);
+       const repromptOutput = requestAttributes.t(language.WELCOME_REPROMPT);
   
        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
        console.log('LINE 21' + JSON.stringify(this.event));
@@ -199,19 +200,38 @@ const ExitHandler = {
 
 const LocalizationInterceptor = {
     process(handlerInput) {
-      const localizationClient = i18n.use(sprintf).init({
-        lng: handlerInput.requestEnvelope.request.locale,
-        overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
-        resources: languageStrings,
-        returnObjects: true
-      });
-  
-      const attributes = handlerInput.attributesManager.getRequestAttributes();
-      attributes.t = function (...args) {
-        return localizationClient.t(...args);
-      };
+        const localizationClient = i18n.use(sprintf).init({
+            lng: handlerInput.requestEnvelope.request.locale,
+            fallbackLng: 'en', // not required
+            resources: languageStrings
+        });
+ 
+        localizationClient.localize = function () { // <-- this is important, because you add a function to localization client, which will resolve your copy
+            const args = arguments;
+            let values = [];
+ 
+            for (var i = 1; i < args.length; i++) {
+                values.push(args[i]);
+            }
+            const value = i18n.t(args[0], { // This is used to transform your copy and fill it with variables using sprintf postprocessor
+                returnObjects: true,
+                postProcess: 'sprintf',
+                sprintf: values
+            });
+ 
+            if (Array.isArray(value)) { // not required if you don't have arrays or don't want to take random values from them
+                return value[Math.floor(Math.random() * value.length)];
+            } else {
+                return value;
+            }
+        }
+ 
+        const attributes = handlerInput.attributesManager.getRequestAttributes();
+        attributes.t = function (...args) {
+            return localizationClient.localize(...args); // <-- here you use that function, that you created which resolves copy by key and add it to the request attributes
+        };
     },
-  };
+};
 
 function getRandomItem(arrayOfItems) {
     console.log("THIS.EVENT = " + JSON.stringify(this.event));
@@ -222,6 +242,11 @@ function getRandomItem(arrayOfItems) {
 
 
 const skillBuilder = Alexa.SkillBuilders.custom();
+const languageStrings = {
+    language: {
+        LANGUAGE: language.LANGUAGE
+    }
+}
 
 exports.handler = skillBuilder
   .addRequestHandlers(
@@ -244,6 +269,7 @@ exports.handler = skillBuilder
   // 3. Insert console.log("THIS.EVENT = " + JSON.stringify(this.event)) in every handler
 
   // removed this from line 34 35 request.type === 'LaunchRequest'|| 
+  // removed from line 7 const {languageStrings} = require('./Data/language.js'); 
 
 
   
