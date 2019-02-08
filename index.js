@@ -5,6 +5,7 @@ const sprintf = require('i18next-sprintf-postprocessor');
 const data = require('./Data/data.js'); 
 const language = require('./Data/language.js'); 
 
+const languageStrings = language; 
 
 const LaunchRequestHandler = {
      canHandle(handlerInput) {
@@ -36,10 +37,7 @@ const GetNewFactIntent = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request; 
         console.log("LINE 34 " + JSON.stringify(this.event));
-    return request.type === 'IntentRequest'
-        && request.intent.name === 'GetNewFactIntent'   
-    
- 
+    return request.type === 'IntentRequest' && request.intent.name === 'GetNewFactIntent'; 
     },
     handle(handlerInput) {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes(); 
@@ -58,8 +56,7 @@ const GetNewFactIntent = {
 const GetNewAnswerIntent = {
      canHandle(handlerInput) {
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-               && handlerInput.requestEnvelope.request.intent.name === 'GetNewAnswerIntent';
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest' && handlerInput.requestEnvelope.request.intent.name === 'GetNewAnswerIntent';
      },
      handle(handlerInput) {
        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
@@ -120,20 +117,19 @@ const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
-        return request.type = 'SessionEndedRequest'; 
+        return request.type === 'SessionEndedRequest'; 
     },
     handle(handlerInput) {
-        console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`) 
+        console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`); 
         return handlerInput.responseBuilder.getResponse(); 
     }
-}
+}; 
 
 const FallbackHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
-    return request.type === 'IntentRequest'
-        &&  request.intent.name === 'AMAZON.FallbackIntent'; 
+    return request.type === 'IntentRequest' &&  request.intent.name === 'AMAZON.FallbackIntent'; 
     },
     handle(handlerInput) {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes(); 
@@ -141,7 +137,7 @@ const FallbackHandler = {
         return handlerInput.responseBuilder
             .speak(requestAttributes.t('FALLBACK_MESSAGE'))
             .reprompt(requestAttributes.t('FALLBACK_REPROMPT'))
-            .getResponse() 
+            .getResponse(); 
     }
 }; 
 
@@ -149,9 +145,7 @@ const HelpHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
-        return request.type === 'IntentRequest'
-        &&     request.intent.name === 'AMAZON.HelpIntent';    
-        
+        return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
         const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
@@ -159,14 +153,13 @@ const HelpHandler = {
         return handlerInput.responseBuilder
             .speak(requestAttributes.t('HELP_MESSAGE'))
             .reprompt(requestAttributes.T('HELP_REPROMPT'))
-            .getResponse()
+            .getResponse(); 
     }
-}
+}; 
 
 const ErrorHandler = {
     canHandle() {
-        true; 
-        console.log("THIS.EVENT = " + JSON.stringify(this.event));
+        return true; 
     },
     handle(handlerInput, error) {
         console.log(`Error message: ${error.message}`); 
@@ -180,23 +173,21 @@ const ErrorHandler = {
             .reprompt(requestAttributes.t('ERROR_MESSAGE'))
             .getResponse(); 
     }
-}
+}; 
 
 const ExitHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
-        return request.type === 'IntentRequest' 
-        &&     (request.intent.name === 'AMAZON.CancelIntent'
-        ||      request.intent.name === 'AMAZON.StopIntent')
+        return request.type === 'IntentRequest' && (request.intent.name === 'AMAZON.CancelIntent' || request.intent.name === 'AMAZON.StopIntent'); 
     },
     handle(handlerInput) {
         console.log("THIS.EVENT = " + JSON.stringify(this.event));
         return handlerInput.responseBuilder
             .speak(requestAttributes.t('STOP_MESSAGE'))
-            .getResponse()
+            .getResponse(); 
     }
-}
+}; 
 
 const LocalizationInterceptor = {
     process(handlerInput) {
@@ -224,7 +215,7 @@ const LocalizationInterceptor = {
             } else {
                 return value;
             }
-        }
+        }; 
  
         const attributes = handlerInput.attributesManager.getRequestAttributes();
         attributes.t = function (...args) {
@@ -238,15 +229,11 @@ function getRandomItem(arrayOfItems) {
      let i = 0;
      i = Math.floor(Math.random() * arrayOfItems.length);
      return (arrayOfItems[i]);
-   };
+   }
+
 
 
 const skillBuilder = Alexa.SkillBuilders.custom();
-const languageStrings = {
-    language: {
-        LANGUAGE: language.LANGUAGE
-    }
-}
 
 exports.handler = skillBuilder
   .addRequestHandlers(
@@ -258,7 +245,6 @@ exports.handler = skillBuilder
     FallbackHandler,
     SessionEndedRequestHandler,
   )
- 
   .addRequestInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
@@ -272,6 +258,28 @@ exports.handler = skillBuilder
   // removed from line 7 const {languageStrings} = require('./Data/language.js'); 
 
 
-  
+//   const LaunchRequestHandler = {
+//     canHandle(handlerInput) {
+//        console.log('LINE 7' + JSON.stringify(this.event));
+//        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+      
+//     },
+//     handle(handlerInput) {
+//       const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+//       const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+ 
+//       const item = requestAttributes.t(getRandomItem(Object.keys(data.FACTS)));
+ 
+//       const speakOutput = requestAttributes.t(language.WELCOME_MESSAGE, requestAttributes.t(language.SKILL_NAME), item);
+//       const repromptOutput = requestAttributes.t(language.WELCOME_REPROMPT);
+ 
+//       handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+//       console.log('LINE 21' + JSON.stringify(this.event));
 
-
+ 
+//       return handlerInput.responseBuilder
+//         .speak(speakOutput)
+//         .reprompt(repromptOutput)
+//         .getResponse();
+//     },
+//   };

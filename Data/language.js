@@ -1,5 +1,4 @@
 module.exports = {
-    'LANGUAGE': {
         SKILL_NAME: 'Meditation Myth Buster',
         GET_FACT_MESSAGE: 'Here\'s your myth: ',
         WELCOME_MESSAGE: 'Welcome to %s. You can ask a question like, what\'s the answer for a %s? ... Now, what can I help you with?', 
@@ -16,6 +15,5 @@ module.exports = {
         DATA_NOT_FOUND_WITHOUT_ITEM_NAME: 'that answer. ',
         DATA_REPEAT_MESSAGE: 'Could you repeat that please?',
         DISPLAY_CARD_TITLE: '%s  - Answer for %s.'
-    }
-}
+}; 
 
